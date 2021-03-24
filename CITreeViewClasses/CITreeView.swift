@@ -160,7 +160,7 @@ public class CITreeView: UITableView {
         return cells
     }
     
-    func totalCell() -> Int {
+    public func totalCell() -> Int {
         var count = 0
         for section in 0 ..< self.numberOfSections{
             count += self.numberOfRows(inSection: section)
