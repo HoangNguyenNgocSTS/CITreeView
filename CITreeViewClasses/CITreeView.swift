@@ -181,12 +181,11 @@ public class CITreeView: UITableView {
     public func toggleCollapseExpand(at indexPath: IndexPath) {
         let treeViewNode = treeViewController.getTreeViewNode(atIndex: indexPath.row)
         let justSelectedTreeViewNode = treeViewNode
-        
-        var willExpandIndexPath = indexPath
         if justSelectedTreeViewNode.expand {
             treeViewController.collapseRows(for: justSelectedTreeViewNode, atIndexPath: indexPath)
             collapseRows(for: justSelectedTreeViewNode, atIndexPath: indexPath){}
         } else {
+            var willExpandIndexPath = indexPath
             if collapseNoneSelectedRows,
                treeViewNode.level == 0,
                 let collapsedTreeViewNode = treeViewController.collapseAllRowsExceptOne(),
@@ -206,6 +205,16 @@ public class CITreeView: UITableView {
                 expandRows(for: justSelectedTreeViewNode, withSelected: indexPath)
             }
         }
+    }
+    
+    public func expandRow(at indexPath: IndexPath) {
+        let treeViewNode = treeViewController.getTreeViewNode(atIndex: indexPath.row)
+        let justSelectedTreeViewNode = treeViewNode
+        if justSelectedTreeViewNode.expand { return }
+        
+        let willExpandIndexPath = indexPath
+        treeViewController.expandRows(atIndexPath: willExpandIndexPath, with: justSelectedTreeViewNode, openWithChildrens: false)
+        expandRows(for: justSelectedTreeViewNode, withSelected: indexPath)
     }
 }
 
